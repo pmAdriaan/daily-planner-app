@@ -1,9 +1,24 @@
 $(document).ready(function () {
-    // Get the current date using day.js
-    const currentDate = dayjs().format('dddd, MMMM D[th], YYYY');
+    // Initialize jQuery UI calendar
+    $('#datepicker').datepicker({
+        onSelect: function (dateText) {
+            // Update time block styles based on the selected date
+            currentDate(dayjs(dateText));
+            updateTimeBlockStyles(dayjs(dateText));
+        },
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        changeMonth: true,
+        changeYear: true,
+        showWeek: true,
+        firstDay: 1,
+    });
 
-    // Display the current date
-    $('#currentDay').text('Today is ' + currentDate);
+    // Function to update the current date
+    function currentDate(date) {
+        let formattedDate = date.format('dddd, MMMM D[th], YYYY');
+        $('#currentDay').text('Date: ' + formattedDate);
+    }
 
     // Function to generate time blocks
     function generateTimeBlocks() {
@@ -21,10 +36,8 @@ $(document).ready(function () {
         });
     }
 
-    // Function to update time block styles based on the current time
-    function updateTimeBlockStyles() {
-        let currentHour = dayjs().hour();
-
+    // Update time block styles based on the selected date and current time
+    function updateTimeBlockStyles(selectedDate) {
         $('.time-block').each(function () {
             let blockHour = parseInt($(this).find('.hour').text().split(' ')[0]);
 
@@ -32,9 +45,12 @@ $(document).ready(function () {
                 blockHour += 12;
             }
 
-            if (blockHour > currentHour) {
+            // Combine selected date with blockHour to get a date time for comparison
+            let blockDateTime = selectedDate.hour(blockHour);
+
+            if (blockDateTime.isAfter(dayjs())) {
                 $(this).addClass('future').removeClass('present past');
-            } else if (blockHour === currentHour) {
+            } else if (blockDateTime.isSame(dayjs(), 'hour')) {
                 $(this).addClass('present').removeClass('future past');
             } else {
                 $(this).addClass('past').removeClass('future present');
@@ -42,10 +58,16 @@ $(document).ready(function () {
         });
     }
 
-    // Call the functions
+    // Call the function to generate time blocks
     generateTimeBlocks();
-    updateTimeBlockStyles();
+
+    // Show today's date when the page is loaded
+    let today = dayjs();
+    currentDate(today);
+    updateTimeBlockStyles(today);
 
     // Update time block styles when the user scrolls
-    $(window).scroll(updateTimeBlockStyles);
+    $(window).scroll(function () {
+        updateTimeBlockStyles(dayjs($('#datepicker').datepicker('getDate')));
+    });
 });
