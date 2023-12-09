@@ -75,13 +75,9 @@ header {
   justify-content: center;
 }
 
-.saveBtn i:hover {
-  margin-right: 5px;
+.saveBtn:hover {
   font-size: 20px;
   color: greenyellow;
-  transition: all 0.3s ease-in-out;
-}
-
-.saveBtn:hover {
   background-color: #046b8e;
+  transition: all 0.3s ease-in-out;
 }
