@@ -24,11 +24,20 @@
       <h1 class="display-3">Work Day Scheduler</h1>
       <p class="lead">A simple calendar app for scheduling your work day</p>
       <p id="currentDay" class="lead"></p>
-      <input id="datepicker" />
+      <p>Select a date: <input id="datepicker" /></p>
     </header>
 
-    <div class="container">
-      <div id="confirm-message"></div>
+    <div class="container"></div>
+
+    <!-- Clear tasks buttons -->
+    <div id="confirm-tasks-clear"></div>
+    <div class="clearTasks">
+      <button class="btn btn-danger" id="clearAllTasks">
+        <i class="fas fa-trash"></i> Clear <span id="clear-tasks-btn">ALL STORAGE</span>
+      </button>
+      <button class="btn btn-danger" id="clearSelectedDate">
+        <i class="fas fa-trash"></i> Clear <span id="clear-tasks-btn">SELECTED DATE</span>
+      </button>
     </div>
 
     <!-- jQuery -->
