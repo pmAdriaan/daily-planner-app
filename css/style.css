@@ -22,6 +22,18 @@ header {
   padding: 60px;
 }
 
+#confirm {
+  margin: 10px 0;
+  display:flex;
+  justify-content: center;
+  font-size: 20px;
+  color: #77dd77;
+}
+
+.fa-clipboard-check {
+  margin: 0 5px;
+}
+
 .description {
   white-space: pre-wrap;
 }
